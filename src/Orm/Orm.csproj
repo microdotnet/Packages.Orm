@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.1</TargetFramework>
+        <Nullable>enable</Nullable>
+        <AssemblyName>MicroDotNet.Packages.Orm</AssemblyName>
+        <RootNamespace>MicroDotNet.Packages.Orm</RootNamespace>
+    </PropertyGroup>
+    <PropertyGroup>
+        <RepositoryRoot>../..</RepositoryRoot>
+    </PropertyGroup>
+    <Import Project="$(RepositoryRoot)/Packages.Orm.Targets" />
+</Project>

@@ -1,0 +1,80 @@
+name: Build and test
+
+on:
+    pull_request:
+        branches: ["master", "develop"]
+    workflow_dispatch:
+
+permissions:
+    id-token: write
+    contents: read
+    checks: write
+
+jobs:
+    build-and-test:
+        name: Build and test code
+        runs-on: ubuntu-latest
+
+        steps:
+          - uses: actions/checkout@v4
+          
+          - name: Setup .NET
+            uses: actions/setup-dotnet@v4
+            with:
+              dotnet-version: 8.0.x
+          
+          - name: Restore dependencies
+            run: dotnet restore
+          
+          - name: Build code
+            run: dotnet build --no-restore
+          
+          - name: Run tests
+            run: dotnet test --no-build --verbosity normal --logger "trx;LogFileName=test-results.trx" --collect:"XPlat Code Coverage"
+          
+          - name: Publish test report
+            uses: dorny/test-reporter@v1
+            if: always()
+            with:
+                name: DotNet tests
+                path: "**/test-results.trx"
+                reporter: dotnet-trx
+                fail-on-error: true
+          
+          - name: Generate HTML report
+            uses: danielpalme/ReportGenerator-GitHub-Action@5.2.4
+            if: always()
+            with:
+                reports: "**/*.cobertura.xml"
+                targetdir: "${{ github.workspace }}/TestReport/HTML"
+                reporttypes: Html
+                verbosity: "Info"
+                title: "Code coverage"
+                tag: "${{ github.run_number }}_${{ github.run_id }}"
+                customSettings: ""
+                toolpath: "reportgeneratortool"
+          
+          - name: Generate summary for GiHub
+            uses: danielpalme/ReportGenerator-GitHub-Action@5.2.4
+            if: always()
+            with:
+                reports: "**/*.cobertura.xml"
+                targetdir: "${{ github.workspace }}/TestReport/PRSummary"
+                reporttypes: MarkdownSummaryGitHub
+                verbosity: "Info"
+                title: "Code coverage"
+                tag: "${{ github.run_number }}_${{ github.run_id }}"
+                customSettings: ""
+                toolpath: "reportgeneratortool"
+          
+          - name: Upload coverage report artifact (HTML)
+            uses: actions/upload-artifact@v4
+            if: always()
+            with:
+                name: HTML
+                path: ${{ github.workspace }}/TestReport/HTML
+                retention-days: 5
+          
+          - name: Publish coverage in build summary
+            run: cat TestReport/PRSummary/SummaryGithub.md >> $GITHUB_STEP_SUMMARY
+            shell: bash

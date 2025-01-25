@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <Copyright>MicroDotNet 2024</Copyright>
+        <Company>MicroDotNet</Company>
+        <Product>MicroDotNet ORM packages</Product>
+        <RepositoryUrl>https://github.com/microdotnet/Packages.Orm</RepositoryUrl>
+    </PropertyGroup>
+
+    <ItemGroup Condition="$(IsTestProject) == 'true'">
+        <PackageReference Include="coverlet.collector" Version="6.0.0"/>
+        <PackageReference Include="FluentAssertions" Version="6.12.2"/>
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0"/>
+        <PackageReference Include="Moq" Version="4.20.72" />
+        <PackageReference Include="TestStack.BDDfy" Version="4.3.2" />
+        <PackageReference Include="xunit" Version="2.5.3"/>
+        <PackageReference Include="xunit.runner.visualstudio" Version="2.5.3"/>
+    </ItemGroup>
+
+    <ItemGroup Condition="$(IsTestProject) == 'true'">
+        <Using Include="FluentAssertions"/>
+        <Using Include="Moq"/>
+        <Using Include="TestStack.BDDfy"/>
+        <Using Include="Xunit"/>
+    </ItemGroup>
+
+    <PropertyGroup>
+        <!-- Get package version from environment variable. -->
+        <CurrentPackageVersion>$(RELEASED_PACKAGE_VERSION)</CurrentPackageVersion>
+
+        <!-- If variable not found, than use a default value. -->
+        <CurrentPackageVersion Condition="'$(CurrentPackageVersion)' == ''">0.0.1</CurrentPackageVersion>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="$(IsTestProject) != 'true'">
+        <VersionPrefix>$(CurrentPackageVersion)</VersionPrefix>
+        <AssemblyVersion>$(CurrentPackageVersion)</AssemblyVersion>
+        <FileVersion>$(CurrentPackageVersion)</FileVersion>
+        <InformationalVersion>$(CurrentPackageVersion)</InformationalVersion>
+        <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
+    </PropertyGroup>
+</Project>
