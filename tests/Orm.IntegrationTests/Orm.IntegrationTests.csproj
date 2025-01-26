@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <AssemblyName>MicroDotNet.Packages.Orm.IntegrationTests</AssemblyName>
+        <RootNamespace>MicroDotNet.Packages.Orm.IntegrationTests</RootNamespace>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+
+        <IsPackable>false</IsPackable>
+        <IsTestProject>true</IsTestProject>
+    </PropertyGroup>
+    <PropertyGroup>
+        <RepositoryRoot>../..</RepositoryRoot>
+    </PropertyGroup>
+    <ItemGroup>
+      <ProjectReference OutputItemType="Analyzer" Include="..\..\src\Orm\Orm.csproj" />
+      <ProjectReference Include="..\Stories\Stories.csproj" />
+    </ItemGroup>
+
+    <Import Project="$(RepositoryRoot)/Packages.Orm.Targets" />
+</Project>

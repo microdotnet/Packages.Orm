@@ -1,13 +1,36 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>netstandard2.1</TargetFramework>
-        <Nullable>enable</Nullable>
+        <TargetFramework>netstandard2.0</TargetFramework>
         <AssemblyName>MicroDotNet.Packages.Orm</AssemblyName>
         <RootNamespace>MicroDotNet.Packages.Orm</RootNamespace>
+        <EnforceExtendedAnalyzerRules>true</EnforceExtendedAnalyzerRules>
     </PropertyGroup>
     <PropertyGroup>
         <RepositoryRoot>../..</RepositoryRoot>
     </PropertyGroup>
+    <ItemGroup>
+      <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.11.0">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
+      <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.11.0" />
+    </ItemGroup>
+    <ItemGroup>
+      <EmbeddedResource Update="ProcedureParametersSourceGeneratorResources.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>ProcedureparametersSourceGeneratorResources.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="ProcedureParametersSourceGeneratorResources.resx">
+        <LastGenOutput>ProcedureParametersSourceGeneratorResources.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+    </ItemGroup>
+    <ItemGroup>
+      <Compile Update="ProcedureParametersSourceGeneratorResources.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>ProcedureParametersSourceGeneratorResources.resx</DependentUpon>
+      </Compile>
+    </ItemGroup>
     <Import Project="$(RepositoryRoot)/Packages.Orm.Targets" />
 </Project>
