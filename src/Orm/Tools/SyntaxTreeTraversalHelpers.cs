@@ -1,6 +1,6 @@
 using Microsoft.CodeAnalysis;
 
-namespace MicroDotNet.Packages.Orm
+namespace MicroDotNet.Packages.Orm.Tools
 {
     public static class SyntaxTreeTraversalHelpers
     {

@@ -4,7 +4,7 @@ using System.Threading;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-namespace MicroDotNet.Packages.Orm
+namespace MicroDotNet.Packages.Orm.Tools
 {
     public static class ExtractionHelpers
     {

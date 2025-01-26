@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
 
-namespace MicroDotNet.Packages.Orm
+namespace MicroDotNet.Packages.Orm.Tools
 {
     public static class TypeMappingProvider
     {
