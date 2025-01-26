@@ -7,7 +7,6 @@ public partial class SimpleParametersContainer
     {
         this.Parameter1 = parameter1;
         this.Parameter2 = parameter2;
-        // this.ExtractParameters();
     }
 
     public string Parameter1 { get; }

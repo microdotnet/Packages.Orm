@@ -9,34 +9,12 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 namespace MicroDotNet.Packages.Orm
 {
     [Generator]
-    public class ProcedureParametersSourceGenerator : IIncrementalGenerator
+    public class ProcedureParametersSourceGenerator : ClassExtensionGeneratorBase<ProcedureParametersAttribute>
     {
-        public void Initialize(IncrementalGeneratorInitializationContext context)
-        {
-            var classes = context.SyntaxProvider
-                .ForAttributeWithMetadataName(
-                    typeof(ProcedureParametersAttribute).FullName,
-                    (sn, ct) => sn is ClassDeclarationSyntax,
-                    (ctx, ct) =>
-                    {
-                        if (!(ctx.TargetNode is ClassDeclarationSyntax))
-                        {
-                            return (null, null);
-                        }
-
-                        var attr = ctx.Attributes.FirstOrDefault(a =>
-                            a.AttributeClass != null && a.AttributeClass.Name == nameof(ProcedureParametersAttribute));
-                        return (ctx.TargetNode as ClassDeclarationSyntax, attr);
-                    })
-                .Where(m => m.Item1 != null && m.Item2 != null);
-            var compilationAndClasses = context.CompilationProvider.Combine(classes.Collect());
-
-            context.RegisterSourceOutput(compilationAndClasses,
-                (spc, source) => Execute(source.Item1, source.Item2, spc));
-        }
-
-        private static void Execute(Compilation compilation,
-            ImmutableArray<(ClassDeclarationSyntax, AttributeData)> classes, SourceProductionContext context)
+        protected override void Execute(
+            Compilation compilation,
+            ImmutableArray<(ClassDeclarationSyntax, AttributeData)> classes,
+            SourceProductionContext context)
         {
             foreach (var (x, i) in classes.Select((x, i) => (x, i)))
             {

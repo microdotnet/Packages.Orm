@@ -24,12 +24,21 @@
       <EmbeddedResource Update="ProcedureParametersSourceGeneratorResources.resx">
         <LastGenOutput>ProcedureParametersSourceGeneratorResources.Designer.cs</LastGenOutput>
       </EmbeddedResource>
+      <EmbeddedResource Update="ResultRowSourceGeneratorResources.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>ResultRowSourceGeneratorResources.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
     </ItemGroup>
     <ItemGroup>
       <Compile Update="ProcedureParametersSourceGeneratorResources.Designer.cs">
         <DesignTime>True</DesignTime>
         <AutoGen>True</AutoGen>
         <DependentUpon>ProcedureParametersSourceGeneratorResources.resx</DependentUpon>
+      </Compile>
+      <Compile Update="ResultRowSourceGeneratorResources.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>ResultRowSourceGeneratorResources.resx</DependentUpon>
       </Compile>
     </ItemGroup>
     <Import Project="$(RepositoryRoot)/Packages.Orm.Targets" />

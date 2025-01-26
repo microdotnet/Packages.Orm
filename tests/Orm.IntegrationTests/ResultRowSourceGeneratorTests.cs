@@ -4,7 +4,7 @@ using Microsoft.CodeAnalysis.CSharp;
 
 namespace MicroDotNet.Packages.Orm.IntegrationTests;
 
-public class ProcedureParametersSourceGeneratorTests
+public class ResultRowSourceGeneratorTests
 {
     private const string CodeToProcess = 
 """
@@ -12,28 +12,30 @@ namespace SomeNamespace
 {
     using MicroDotNet.Packages.Orm;
 
-    [ProcedureParameters]
-    public partial class ParametersContainer
+    [ResultRow]
+    public class SimpleResultContainer
     {
-        public ParametersContainer(
-            string parameter1)
+        public SimpleResultContainer(SimpleResultContainer column1, int column2)
         {
-            this.Parameter1 = parameter1;
+            this.Column1 = column1;
+            this.Column2 = column2;
         }
 
-        public string Parameter1 { get; }
+        public SimpleResultContainer Column1 { get; }
+        
+        public int Column2 { get; }
     }
 }
 """;
 
-    private ProcedureParametersSourceGenerator generator = default!;
+    private ResultRowSourceGenerator generator = default!;
 
     private string sourceCode = default!;
     
     private GeneratorDriverRunResult compilationResult = default!;
 
     [Fact]
-    public void WhenGeneratorIsRunThenParameterExtractionIsGenerated()
+    public void WhenGeneratorIsRunThenResultRowCreationIsGenerated()
     {
         this.Given(t => t.SourceCodeIs(CodeToProcess))
             .And(t => t.GeneratorIsCreated())
@@ -46,7 +48,7 @@ namespace SomeNamespace
 
     private void GeneratorIsCreated()
     {
-        this.generator = new ProcedureParametersSourceGenerator();
+        this.generator = new ResultRowSourceGenerator();
     }
 
     private void CodeIsCompiled()
@@ -54,7 +56,7 @@ namespace SomeNamespace
         var compilation = CSharpCompilation.Create("CSharpCodeGen.GenerateAssembly")
             .AddSyntaxTrees(CSharpSyntaxTree.ParseText(this.sourceCode))
             .AddReferences(MetadataReference.CreateFromFile(typeof(object).Assembly.Location))
-            .AddReferences(MetadataReference.CreateFromFile(typeof(ProcedureParametersAttribute).Assembly.Location))
+            .AddReferences(MetadataReference.CreateFromFile(typeof(ResultRowAttribute).Assembly.Location))
             .WithOptions(new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
 
         var driver = CSharpGeneratorDriver.Create(generator)
