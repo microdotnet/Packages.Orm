@@ -10,6 +10,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Orm.IntegrationTests", "tes
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stories", "tests\Stories\Stories.csproj", "{E90F4F1E-2D7C-4353-8277-1483BFC367A9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Orm.Connectors.SqlServer", "src\Orm.Connectors.SqlServer\Orm.Connectors.SqlServer.csproj", "{615EE08B-7136-453B-9A49-1958EC2D824D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,6 +21,7 @@ Global
 		{6F47B6C3-916B-44FF-89E0-12F5FE22793F} = {6534938C-8C15-40CB-AAB0-AA9477DEFE94}
 		{F576BD60-951E-499C-B073-0A72F09BC4D0} = {66C695DC-5A03-4615-ACF7-BF02DB1C0FA1}
 		{E90F4F1E-2D7C-4353-8277-1483BFC367A9} = {66C695DC-5A03-4615-ACF7-BF02DB1C0FA1}
+		{615EE08B-7136-453B-9A49-1958EC2D824D} = {6534938C-8C15-40CB-AAB0-AA9477DEFE94}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{6F47B6C3-916B-44FF-89E0-12F5FE22793F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -33,5 +36,9 @@ Global
 		{E90F4F1E-2D7C-4353-8277-1483BFC367A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E90F4F1E-2D7C-4353-8277-1483BFC367A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E90F4F1E-2D7C-4353-8277-1483BFC367A9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{615EE08B-7136-453B-9A49-1958EC2D824D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{615EE08B-7136-453B-9A49-1958EC2D824D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{615EE08B-7136-453B-9A49-1958EC2D824D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{615EE08B-7136-453B-9A49-1958EC2D824D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

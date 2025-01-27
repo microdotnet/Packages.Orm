@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>true</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <AssemblyName>MicroDotNet.Packages.Orm.SqlServer</AssemblyName>
+        <RootNamespace>MicroDotNet.Packages.Orm.SqlServer</RootNamespace>
+    </PropertyGroup>
+    <PropertyGroup>
+        <RepositoryRoot>../..</RepositoryRoot>
+    </PropertyGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\Orm\Orm.csproj" />
+    </ItemGroup>
+    <ItemGroup>
+      <PackageReference Include="Microsoft.Data.SqlClient" Version="6.0.1" />
+    </ItemGroup>
+    <Import Project="$(RepositoryRoot)/Packages.Orm.Targets" />
+</Project>
