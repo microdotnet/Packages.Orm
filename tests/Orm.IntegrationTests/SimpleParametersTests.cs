@@ -36,17 +36,14 @@ public class SimpleParametersTests
 
     private void ExtractedParametersCountIs(int value)
     {
-        this.extractedParameters.Should().HaveCount(value);
+        this.extractedParameters.Count.ShouldBe(value);
     }
 
     private void ExtractedParametersContains(string key, object value, DbType dbType)
     {
-        this.extractedParameters.Should()
-            .Contain(p => p.Name == key);
+        this.extractedParameters.ShouldContain(p => p.Name == key);
         var parameter = this.extractedParameters.Single(p => p.Name == key);
-        parameter.Value.Should()
-            .Be(value);
-        parameter.DbType.Should()
-            .Be(dbType);
+        parameter.Value.ShouldBe(value);
+        parameter.DbType.ShouldBe(dbType);
     }
 }

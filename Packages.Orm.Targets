@@ -9,7 +9,7 @@
 
     <ItemGroup Condition="$(IsTestProject) == 'true'">
         <PackageReference Include="coverlet.collector" Version="6.0.0"/>
-        <PackageReference Include="FluentAssertions" Version="6.12.2"/>
+        <PackageReference Include="Shouldly" Version="4.3.0"/>
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0"/>
         <PackageReference Include="Moq" Version="4.20.72" />
         <PackageReference Include="TestStack.BDDfy" Version="4.3.2" />
@@ -18,8 +18,8 @@
     </ItemGroup>
 
     <ItemGroup Condition="$(IsTestProject) == 'true'">
-        <Using Include="FluentAssertions"/>
         <Using Include="Moq"/>
+        <Using Include="Shouldly"/>
         <Using Include="TestStack.BDDfy"/>
         <Using Include="Xunit"/>
     </ItemGroup>

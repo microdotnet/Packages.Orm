@@ -77,8 +77,8 @@ public class CreateCommandTests
 
     private void MockedCommandIsReturned()
     {
-        this.createdCommand.Should()
-            .BeSameAs(this.commandMock.Object);
+        this.createdCommand
+            .ShouldBeSameAs(this.commandMock.Object);
     }
 
     private void CommandTextIs(string value)

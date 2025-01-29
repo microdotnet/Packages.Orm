@@ -66,7 +66,7 @@ namespace SomeNamespace
 
     private void CompilationResultIsValid()
     {
-        this.compilationResult.Should().NotBeNull();
-        this.compilationResult.GeneratedTrees.Should().HaveCount(1);
+        this.compilationResult.ShouldNotBeNull();
+        this.compilationResult.GeneratedTrees.Length.ShouldBe(1);
     }
 }

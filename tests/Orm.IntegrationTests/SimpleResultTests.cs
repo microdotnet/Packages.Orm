@@ -47,13 +47,12 @@ public class SimpleResultTests
 
     private void ResultIsNotNull()
     {
-        this.result.Should()
-            .NotBeNull();
+        this.result.ShouldNotBeNull();
     }
 
     private void ResultPropertiesAre(string value1, int value2)
     {
-        this.result!.Column1.Should().Be(value1);
-        this.result.Column2.Should().Be(value2);
+        this.result!.Column1.ShouldBe(value1);
+        this.result.Column2.ShouldBe(value2);
     }
 }
