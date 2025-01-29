@@ -62,13 +62,15 @@ namespace MicroDotNet.Packages.Orm {
         /// <summary>
         ///   Looks up a localized string similar to namespace {0}
         ///{{
-        ///    using System.Collections.Generic;
+        ///    using System.Collections.ObjectModel;
+        ///    using System.Data;
+        ///    using MicroDotNet.Packages.Orm.DatabaseAbstraction;
         ///
         ///    public partial class {1}
         ///    {{
-        ///        public Dictionary&lt;string, object&gt; ExtractParameters()
+        ///        public Collection&lt;ParameterInfo&gt; ExtractParameters()
         ///        {{
-        ///            var result = new Dictionary&lt;string, object&gt;();
+        ///            var result = new Collection&lt;ParameterInfo&gt;();
         ///{2}            return result;
         ///        }}
         ///    }}

@@ -2,7 +2,7 @@ using System;
 
 namespace MicroDotNet.Packages.Orm
 {
-    public abstract class StoredProcedureCallAttributeBase : Attribute
+    public abstract partial class StoredProcedureCallAttributeBase : Attribute
     {
         protected StoredProcedureCallAttributeBase(string procedureName, CallTypes callType)
         {
@@ -19,12 +19,5 @@ namespace MicroDotNet.Packages.Orm
         public string ProcedureName { get; }
         
         public CallTypes CallType { get; }
-
-        public enum CallTypes
-        {
-            SelectMultiple = 1,
-            SelectOne = 2,
-            ExecuteScalar = 4,
-        }
     }
 }

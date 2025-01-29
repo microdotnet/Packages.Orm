@@ -35,8 +35,12 @@ namespace MicroDotNet.Packages.Orm
                     .ToList();
                 foreach (var prop in props)
                 {
+                    var propertyType = prop.Type.ToString();
+                    var dbType = Tools.TypeMappingProvider.MapToDbType(propertyType);
                     propertiesExtraction.AppendLine(
-                        $@"            result.Add(""{prop.Identifier.Text}"", this.{prop.Identifier.Text});");
+                        $@"            var parameter_{prop.Identifier.Text} = new ParameterInfo(""{prop.Identifier.Text}"", this.{prop.Identifier.Text}, {dbType});");
+                    propertiesExtraction.AppendLine(
+                        $@"            result.Add(parameter_{prop.Identifier.Text});");
                 }
 
                 var generatedFileContents = string.Format(

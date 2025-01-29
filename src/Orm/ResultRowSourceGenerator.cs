@@ -48,7 +48,7 @@ namespace MicroDotNet.Packages.Orm
                 {
                     ordinalsCalculation.AppendLine($"                var {parameter.Identifier.Text}_ordinal = dataRecord.GetOrdinal(\"{parameter.Identifier.Text}\");");
                     ordinalsCalculation.AppendLine($"                Ordinals.AddOrUpdate(\"{parameter.Identifier.Text}\", {parameter.Identifier.Text}_ordinal, (k, ov) => {parameter.Identifier.Text}_ordinal);");
-                    var parameterExtraction = TypeMappingProvider.CreateMapping(
+                    var parameterExtraction = TypeMappingProvider.CreateMappingToResult(
                         parameter.Identifier.Text,
                         parameter.Type.ToString());
                     resultCreation.AppendLine($"            {parameterExtraction}");
