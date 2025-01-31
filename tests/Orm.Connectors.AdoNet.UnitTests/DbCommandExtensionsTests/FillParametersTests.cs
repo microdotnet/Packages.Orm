@@ -2,12 +2,11 @@ using System.Collections.ObjectModel;
 using System.Data;
 using System.Data.Common;
 using System.Diagnostics.CodeAnalysis;
-using MicroDotNet.Packages.Orm.Connectors.AdoNet;
 using MicroDotNet.Packages.Orm.DatabaseAbstraction;
 using MicroDotNet.Packages.Orm.Stories;
 using Moq.Protected;
 
-namespace MicroDotNet.Packages.Orm.IntegrationTests.DbCommandExtensionsTests;
+namespace MicroDotNet.Packages.Orm.Connectors.AdoNet.UnitTests.DbCommandExtensionsTests;
 
 public class FillParametersTests
 {
@@ -38,7 +37,7 @@ public class FillParametersTests
         this.command
             .Protected()
             .SetupGet<DbParameterCollection>("DbParameterCollection")
-            .Returns(dbParameters.Object);
+            .Returns(this.dbParameters.Object);
     }
 
     private void ParameterIsAdded(string parameterName, object value, DbType dbType)

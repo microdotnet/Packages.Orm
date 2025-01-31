@@ -1,12 +1,11 @@
 using System.Collections.ObjectModel;
 using System.Data;
 using System.Data.Common;
-using MicroDotNet.Packages.Orm.Connectors.AdoNet;
 using MicroDotNet.Packages.Orm.DatabaseAbstraction;
 using MicroDotNet.Packages.Orm.Stories;
 using Moq.Protected;
 
-namespace MicroDotNet.Packages.Orm.IntegrationTests.DbCommandExtensionsTests;
+namespace MicroDotNet.Packages.Orm.Connectors.AdoNet.UnitTests.DbCommandExtensionsTests;
 
 public class CreateCommandTests
 {
@@ -42,7 +41,7 @@ public class CreateCommandTests
         this.connectionMock
             .Protected()
             .Setup<DbCommand>("CreateDbCommand")
-            .Returns(commandMock.Object);
+            .Returns(this.commandMock.Object);
     }
 
     private void StoredProcedureNameIs(string value)

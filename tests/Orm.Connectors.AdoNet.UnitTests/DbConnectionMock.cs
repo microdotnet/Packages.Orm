@@ -2,7 +2,7 @@ using System.Data;
 using System.Data.Common;
 using System.Diagnostics.CodeAnalysis;
 
-namespace MicroDotNet.Packages.Orm.IntegrationTests;
+namespace MicroDotNet.Packages.Orm.Connectors.AdoNet.UnitTests;
 
 public class DbConnectionMock : DbConnection
 {

@@ -2,8 +2,8 @@
 
     <PropertyGroup>
         <TargetFramework>net8.0</TargetFramework>
-        <AssemblyName>MicroDotNet.Packages.Orm.IntegrationTests</AssemblyName>
-        <RootNamespace>MicroDotNet.Packages.Orm.IntegrationTests</RootNamespace>
+        <AssemblyName>MicroDotNet.Packages.Orm.Connectors.AdoNet.UnitTests</AssemblyName>
+        <RootNamespace>MicroDotNet.Packages.Orm.Connectors.AdoNet.UnitTests</RootNamespace>
         <ImplicitUsings>enable</ImplicitUsings>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
