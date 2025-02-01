@@ -1,3 +1,7 @@
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Data;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -7,8 +11,11 @@ namespace MicroDotNet.Packages.Orm.DatabaseAbstraction
     {
         string ConnectionString { get; }
         
-        Task<StoredProcedureCallResult> ExecuteAsync(
-            StoredProcedureCallContext context,
-            CancellationToken cancellationToken);
+        Task<ReadOnlyCollection<TResult>> ReadDataAsync<TResult>(
+            string procedureName,
+            ICollection<ParameterInfo> parameters,
+            Func<IDataRecord, TResult> mapper,
+            CancellationToken cancellationToken)
+            where TResult : class;
     }
 }

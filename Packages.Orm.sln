@@ -14,6 +14,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Orm.Connectors.AdoNet", "sr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Orm.Connectors.AdoNet.UnitTests", "tests\Orm.Connectors.AdoNet.UnitTests\Orm.Connectors.AdoNet.UnitTests.csproj", "{547290FD-D6EB-4064-867B-31A5606C2B0F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Orm.Connectors.AdoNet.IntegrationTests", "tests\Orm.Connectors.AdoNet.IntegrationTests\Orm.Connectors.AdoNet.IntegrationTests.csproj", "{837544E3-8D5D-46F4-9DD2-3FDB7C3D1332}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,6 +27,7 @@ Global
 		{E90F4F1E-2D7C-4353-8277-1483BFC367A9} = {66C695DC-5A03-4615-ACF7-BF02DB1C0FA1}
 		{129653E8-992A-4ADA-9638-7132B12FF2B4} = {6534938C-8C15-40CB-AAB0-AA9477DEFE94}
 		{547290FD-D6EB-4064-867B-31A5606C2B0F} = {66C695DC-5A03-4615-ACF7-BF02DB1C0FA1}
+		{837544E3-8D5D-46F4-9DD2-3FDB7C3D1332} = {66C695DC-5A03-4615-ACF7-BF02DB1C0FA1}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{6F47B6C3-916B-44FF-89E0-12F5FE22793F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -47,5 +50,9 @@ Global
 		{547290FD-D6EB-4064-867B-31A5606C2B0F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{547290FD-D6EB-4064-867B-31A5606C2B0F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{547290FD-D6EB-4064-867B-31A5606C2B0F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{837544E3-8D5D-46F4-9DD2-3FDB7C3D1332}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{837544E3-8D5D-46F4-9DD2-3FDB7C3D1332}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{837544E3-8D5D-46F4-9DD2-3FDB7C3D1332}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{837544E3-8D5D-46F4-9DD2-3FDB7C3D1332}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

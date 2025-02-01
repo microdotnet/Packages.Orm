@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <AssemblyName>MicroDotNet.Packages.Orm.Connectors.AdoNet.IntegrationTests</AssemblyName>
+        <RootNamespace>MicroDotNet.Packages.Orm.Connectors.AdoNet.IntegrationTests</RootNamespace>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <IsPackable>false</IsPackable>
+        <IsTestProject>true</IsTestProject>
+    </PropertyGroup>
+    <PropertyGroup>
+        <RepositoryRoot>../..</RepositoryRoot>
+    </PropertyGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\..\src\Orm.Connectors.AdoNet\Orm.Connectors.AdoNet.csproj" />
+        <ProjectReference Include="..\Stories\Stories.csproj" />
+    </ItemGroup>
+    <ItemGroup>
+      <PackageReference Include="Microsoft.Data.SqlClient" Version="6.0.1" />
+      <PackageReference Include="Testcontainers.MsSql" Version="4.1.0" />
+    </ItemGroup>
+
+    <Import Project="$(RepositoryRoot)/Packages.Orm.Targets" />
+</Project>

@@ -1,3 +1,5 @@
+using System.Collections.ObjectModel;
+using System.Data;
 using System.Data.Common;
 using System.Transactions;
 using MicroDotNet.Packages.Orm.DatabaseAbstraction;
@@ -14,27 +16,35 @@ public class DatabaseConnection<TConnection> : IDatabaseConnection
 
     public string ConnectionString { get; }
 
-    public async Task<StoredProcedureCallResult> ExecuteAsync(
-        StoredProcedureCallContext context,
+    public async Task<ReadOnlyCollection<TResult>> ReadDataAsync<TResult>(
+        string procedureName,
+        ICollection<ParameterInfo> parameters,
+        Func<IDataRecord, TResult> mapper,
         CancellationToken cancellationToken)
+        where TResult : class
     {
         var connection = new TConnection();
         connection.ConnectionString = this.ConnectionString;
-        var command = connection.CreateCommand(context);
+        var command = connection.CreateCommand();
+        command.CommandText = procedureName;
+        command.CommandType = CommandType.StoredProcedure;
+        foreach (var param in parameters)
+        {
+            var p = command.CreateParameter();
+            p.ParameterName = param.Name;
+            p.DbType = param.DbType;
+            p.Value = param.Value;
+            command.Parameters.Add(p);
+        }
+
         await connection.OpenAsync(cancellationToken)
             .ConfigureAwait(false);
-        StoredProcedureCallResult result;
-        if (context.CallType == CallTypes.ExecuteScalar)
+        var reader = await command.ExecuteReaderAsync(cancellationToken)
+            .ConfigureAwait(false);
+        var results = new List<TResult>();
+        while (await reader.ReadAsync(cancellationToken).ConfigureAwait(false))
         {
-            result = await this.ReadFromDatabaseAsync(
-                    command,
-                    context,
-                    cancellationToken)
-                .ConfigureAwait(false);
-        }
-        else
-        {
-            result = new StoredProcedureCallResult();
+            results.Add(mapper(reader));
         }
 
         if (Transaction.Current is not null)
@@ -43,16 +53,6 @@ public class DatabaseConnection<TConnection> : IDatabaseConnection
                 .ConfigureAwait(false);
         }
 
-        return result;
-    }
-
-    private async Task<StoredProcedureCallResult> ReadFromDatabaseAsync(
-        DbCommand command,
-        StoredProcedureCallContext context,
-        CancellationToken cancellationToken)
-    {
-        var reader = await command.ExecuteReaderAsync(cancellationToken)
-            .ConfigureAwait(false);
-        return new StoredProcedureCallResult();
+        return new ReadOnlyCollection<TResult>(results);
     }
 }
