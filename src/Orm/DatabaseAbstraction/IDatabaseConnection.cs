@@ -11,10 +11,11 @@ namespace MicroDotNet.Packages.Orm.DatabaseAbstraction
     {
         string ConnectionString { get; }
         
-        Task<ReadOnlyCollection<TResult>> ReadDataAsync<TResult>(
+        Task<ExecutionResult<TResult>> ExecuteProcedureAsync<TResult>(
             string procedureName,
-            ICollection<ParameterInfo> parameters,
-            Func<IDataRecord, TResult> mapper,
+            IReadOnlyCollection<ParameterInfo> inputParameters,
+            IReadOnlyCollection<string> outputParameters,
+            Func<IDataReader, TResult> mapper,
             CancellationToken cancellationToken)
             where TResult : class;
     }

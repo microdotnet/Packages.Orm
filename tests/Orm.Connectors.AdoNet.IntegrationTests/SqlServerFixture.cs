@@ -81,5 +81,23 @@ public class SqlServerFixture : IAsyncLifetime
             END
             """;
         await ExecuteCommand(connection, createRetrievalProcedureCommandText);
+        const string createCounterProcedureCommandText =
+            """
+            CREATE PROCEDURE [dbo].[CountTestData]
+            (
+                @Increase INT
+            )
+            AS
+            BEGIN
+                DECLARE @Result INT
+                SELECT
+                    @Result = COUNT(*) + @Increase
+                FROM
+                    [dbo].[TestTable]
+
+                RETURN @Result
+            END
+            """;
+        await ExecuteCommand(connection, createCounterProcedureCommandText);
     }
 }

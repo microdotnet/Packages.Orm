@@ -4,6 +4,7 @@ using Microsoft.Data.SqlClient;
 
 namespace MicroDotNet.Packages.Orm.Connectors.AdoNet.IntegrationTests;
 
+// [Collection("Database collection")]
 public class SqlDatabaseConnectionTests
     : IClassFixture<SqlServerFixture>
 {
@@ -15,19 +16,33 @@ public class SqlDatabaseConnectionTests
     }
 
     [Fact]
-    public async Task WhenCommandIsExecutedThenCorrectResultIsReturned()
+    public async Task WhenDataRetrievalIsExecutedThenCorrectResultIsReturned()
     {
-        var connection = new DatabaseConnection<SqlConnection>(this.sqlServer.ConnectionString);
-        var result = await connection.ReadDataAsync(
+        var connection = new AdoNetDatabaseConnection<SqlConnection>(this.sqlServer.ConnectionString);
+        var result = await connection.ExecuteProcedureAsync(
             "[dbo].[ExtractTestData]",
             [new ParameterInfo("Id", 1, DbType.Int32)],
+            [],
             dr => new Row(dr.GetInt32(0), dr.GetString(1)),
             CancellationToken.None);
         result.ShouldNotBeNull();
-        result.ShouldNotBeEmpty();
-        result.Count.ShouldBe(1);
-        result[0].Id.ShouldBe(1);
-        result[0].Text.ShouldBe("Value1");
+        result.Rows.Count.ShouldBe(1);
+        result.Rows[0].Id.ShouldBe(1);
+        result.Rows[0].Text.ShouldBe("Value1");
+    }
+
+    [Fact]
+    public async Task WhenScalarRetrievalIsExecutedThenCorrectResultIsReturned()
+    {
+        var connection = new AdoNetDatabaseConnection<SqlConnection>(this.sqlServer.ConnectionString);
+        var result = await connection.ExecuteProcedureAsync(
+            "[dbo].[CountTestData]",
+            [new ParameterInfo("Increase", 3, DbType.Int32)],
+            [],
+            _ => new NoRowsResult(),
+            CancellationToken.None);
+        result.ShouldNotBeNull();
+        result.ReturnValue.ShouldBe(7);
     }
 
     private class Row
