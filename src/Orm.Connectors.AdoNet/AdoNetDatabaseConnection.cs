@@ -1,4 +1,3 @@
-using System.Collections.ObjectModel;
 using System.Data;
 using System.Data.Common;
 using System.Transactions;
@@ -20,6 +19,7 @@ public class AdoNetDatabaseConnection<TConnection> : IDatabaseConnection
 
     public async Task<ExecutionResult<TResult>> ExecuteProcedureAsync<TResult>(
         string procedureName,
+        CommandType commandType,
         IReadOnlyCollection<ParameterInfo> inputParameters,
         IReadOnlyCollection<string> outputParameters,
         Func<IDataReader, TResult> mapper,
@@ -28,6 +28,7 @@ public class AdoNetDatabaseConnection<TConnection> : IDatabaseConnection
     {
         var command = await this.PrepareCommandAsync(
             procedureName,
+            commandType,
             inputParameters,
             outputParameters,
             cancellationToken)
@@ -63,6 +64,7 @@ public class AdoNetDatabaseConnection<TConnection> : IDatabaseConnection
 
     private async Task<DbCommand> PrepareCommandAsync(
         string procedureName,
+        CommandType commandType,
         IReadOnlyCollection<ParameterInfo> inputParameters,
         IReadOnlyCollection<string> outputParameters,
         CancellationToken cancellationToken)
@@ -71,7 +73,7 @@ public class AdoNetDatabaseConnection<TConnection> : IDatabaseConnection
         connection.ConnectionString = this.ConnectionString;
         var command = connection.CreateCommand();
         command.CommandText = procedureName;
-        command.CommandType = CommandType.StoredProcedure;
+        command.CommandType = commandType;
         foreach (var param in inputParameters)
         {
             var p = command.CreateParameter();

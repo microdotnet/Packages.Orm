@@ -4,7 +4,7 @@ using Testcontainers.MsSql;
 
 namespace MicroDotNet.Packages.Orm.Connectors.AdoNet.IntegrationTests;
 
-public class SqlServerFixture : IAsyncLifetime
+public class MsSqlServerFixture : IAsyncLifetime
 {
     private const string AdminPassword = @"T3stC0NT/\|NERs";
     
@@ -12,7 +12,7 @@ public class SqlServerFixture : IAsyncLifetime
 
     private readonly MsSqlContainer container;
 
-    public SqlServerFixture()
+    public MsSqlServerFixture()
     {
         var builder = new MsSqlBuilder()
             .WithPassword(AdminPassword);

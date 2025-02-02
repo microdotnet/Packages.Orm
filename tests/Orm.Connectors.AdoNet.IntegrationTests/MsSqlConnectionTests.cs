@@ -4,23 +4,22 @@ using Microsoft.Data.SqlClient;
 
 namespace MicroDotNet.Packages.Orm.Connectors.AdoNet.IntegrationTests;
 
-// [Collection("Database collection")]
-public class SqlDatabaseConnectionTests
-    : IClassFixture<SqlServerFixture>
+public class MsSqlConnectionTests : IClassFixture<MsSqlServerFixture>
 {
-    private readonly SqlServerFixture sqlServer;
+    private readonly MsSqlServerFixture fixture;
 
-    public SqlDatabaseConnectionTests(SqlServerFixture sqlServer)
+    public MsSqlConnectionTests(MsSqlServerFixture fixture)
     {
-        this.sqlServer = sqlServer ?? throw new ArgumentNullException(nameof(sqlServer));
+        this.fixture = fixture ?? throw new ArgumentNullException(nameof(fixture));
     }
 
     [Fact]
     public async Task WhenDataRetrievalIsExecutedThenCorrectResultIsReturned()
     {
-        var connection = new AdoNetDatabaseConnection<SqlConnection>(this.sqlServer.ConnectionString);
+        var connection = new AdoNetDatabaseConnection<SqlConnection>(this.fixture.ConnectionString);
         var result = await connection.ExecuteProcedureAsync(
             "[dbo].[ExtractTestData]",
+            CommandType.StoredProcedure,
             [new ParameterInfo("Id", 1, DbType.Int32)],
             [],
             dr => new Row(dr.GetInt32(0), dr.GetString(1)),
@@ -34,9 +33,10 @@ public class SqlDatabaseConnectionTests
     [Fact]
     public async Task WhenScalarRetrievalIsExecutedThenCorrectResultIsReturned()
     {
-        var connection = new AdoNetDatabaseConnection<SqlConnection>(this.sqlServer.ConnectionString);
+        var connection = new AdoNetDatabaseConnection<SqlConnection>(this.fixture.ConnectionString);
         var result = await connection.ExecuteProcedureAsync(
             "[dbo].[CountTestData]",
+            CommandType.StoredProcedure,
             [new ParameterInfo("Increase", 3, DbType.Int32)],
             [],
             _ => new NoRowsResult(),
