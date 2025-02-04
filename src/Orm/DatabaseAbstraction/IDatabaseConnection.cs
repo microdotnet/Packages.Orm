@@ -14,9 +14,9 @@ namespace MicroDotNet.Packages.Orm.DatabaseAbstraction
         Task<ExecutionResult<TResult>> ExecuteProcedureAsync<TResult>(
             string procedureName,
             CommandType commandType,
-            IReadOnlyCollection<ParameterInfo> inputParameters,
+            IReadOnlyCollection<ParameterInformation> inputParameters,
             IReadOnlyCollection<string> outputParameters,
-            Func<IDataReader, TResult> mapper,
+            Func<IDataRecord, TResult> mapper,
             CancellationToken cancellationToken)
             where TResult : class;
     }

@@ -2,9 +2,9 @@ using System.Data;
 
 namespace MicroDotNet.Packages.Orm.DatabaseAbstraction
 {
-    public class ParameterInfo
+    public class ParameterInformation
     {
-        public ParameterInfo(string name, object value, DbType dbType)
+        public ParameterInformation(string name, object value, DbType dbType)
         {
             this.Name = name;
             this.Value = value;

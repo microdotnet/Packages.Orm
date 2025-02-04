@@ -32,7 +32,7 @@ namespace MicroDotNet.Packages.Orm
 
         protected abstract void Execute(
             Compilation compilation,
-            ImmutableArray<(ClassDeclarationSyntax, AttributeData)> classes,
+            ImmutableArray<(ClassDeclarationSyntax ClassData, AttributeData AttributeData)> classes,
             SourceProductionContext context);
     }
 }

@@ -20,9 +20,9 @@ public class AdoNetDatabaseConnection<TConnection> : IDatabaseConnection
     public async Task<ExecutionResult<TResult>> ExecuteProcedureAsync<TResult>(
         string procedureName,
         CommandType commandType,
-        IReadOnlyCollection<ParameterInfo> inputParameters,
+        IReadOnlyCollection<ParameterInformation> inputParameters,
         IReadOnlyCollection<string> outputParameters,
-        Func<IDataReader, TResult> mapper,
+        Func<IDataRecord, TResult> mapper,
         CancellationToken cancellationToken)
         where TResult : class
     {
@@ -65,7 +65,7 @@ public class AdoNetDatabaseConnection<TConnection> : IDatabaseConnection
     private async Task<DbCommand> PrepareCommandAsync(
         string procedureName,
         CommandType commandType,
-        IReadOnlyCollection<ParameterInfo> inputParameters,
+        IReadOnlyCollection<ParameterInformation> inputParameters,
         IReadOnlyCollection<string> outputParameters,
         CancellationToken cancellationToken)
     {

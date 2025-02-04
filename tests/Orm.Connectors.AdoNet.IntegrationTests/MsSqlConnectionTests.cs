@@ -20,7 +20,7 @@ public class MsSqlConnectionTests : IClassFixture<MsSqlServerFixture>
         var result = await connection.ExecuteProcedureAsync(
             "[dbo].[ExtractTestData]",
             CommandType.StoredProcedure,
-            [new ParameterInfo("Id", 1, DbType.Int32)],
+            [new ParameterInformation("Id", 1, DbType.Int32)],
             [],
             dr => new Row(dr.GetInt32(0), dr.GetString(1)),
             CancellationToken.None);
@@ -37,7 +37,7 @@ public class MsSqlConnectionTests : IClassFixture<MsSqlServerFixture>
         var result = await connection.ExecuteProcedureAsync(
             "[dbo].[CountTestData]",
             CommandType.StoredProcedure,
-            [new ParameterInfo("Increase", 3, DbType.Int32)],
+            [new ParameterInformation("Increase", 3, DbType.Int32)],
             [],
             _ => new NoRowsResult(),
             CancellationToken.None);

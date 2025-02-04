@@ -63,16 +63,20 @@ namespace MicroDotNet.Packages.Orm {
         ///   Looks up a localized string similar to namespace {0}
         ///{{
         ///    using System;
+        ///    using System.Collections.ObjectModel;
+        ///    using System.Data;
+        ///    using System.Threading;
         ///    using System.Threading.Tasks;
+        ///    using MicroDotNet.Packages.Orm.DatabaseAbstraction;
         ///
         ///    public partial class {1}
         ///    {{
-        ///        public async Task ExecuteScalar()
+        ///        public async Task&lt;object&gt; ExecuteScalar(
+        ///            IDatabaseConnection connection,
+        ///            CancellationToken cancellationToken)
         ///        {{
-        ///            await Task.Delay(TimeSpan.FromSeconds(1));
-        ///        }}
-        ///    }}
-        ///}}.
+        ///            var commandText = {1}.CommandText;
+        ///            var commandType = {1}.Command [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string FileContentsTemplate {
             get {

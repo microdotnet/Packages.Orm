@@ -20,7 +20,7 @@ public class PostgresConnectionTests : IClassFixture<PostgresServerFixture>
         var result = await connection.ExecuteProcedureAsync(
             "SELECT * FROM ExtractTestData(@Id)",
             CommandType.Text,
-            [new ParameterInfo("Id", 1, DbType.Int32)],
+            [new ParameterInformation("Id", 1, DbType.Int32)],
             [],
             dr => new Row(dr.GetInt32(0), dr.GetString(1)),
             CancellationToken.None);
@@ -37,7 +37,7 @@ public class PostgresConnectionTests : IClassFixture<PostgresServerFixture>
         var result = await connection.ExecuteProcedureAsync(
             "SELECT CountTestData(@Increase)",
             CommandType.Text,
-            [new ParameterInfo("Increase", 3, DbType.Int32)],
+            [new ParameterInformation("Increase", 3, DbType.Int32)],
             [],
             dr => new CountResult(dr.GetInt32(0)),
             CancellationToken.None);

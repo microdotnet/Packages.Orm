@@ -9,7 +9,7 @@ public class SimpleParametersTests
 {
     private SimpleParametersContainer instance = default!;
     
-    private Collection<ParameterInfo> extractedParameters = default!;
+    private Collection<ParameterInformation> extractedParameters = default!;
     
     [Fact]
     public void WhenSimpleParametersInstanceIsCreatedThenCorrectParametersCanBeExtracted()

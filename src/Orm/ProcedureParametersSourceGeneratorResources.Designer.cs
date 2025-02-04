@@ -68,9 +68,9 @@ namespace MicroDotNet.Packages.Orm {
         ///
         ///    public partial class {1}
         ///    {{
-        ///        public Collection&lt;ParameterInfo&gt; ExtractParameters()
+        ///        public Collection&lt;ParameterInformation&gt; ExtractParameters()
         ///        {{
-        ///            var result = new Collection&lt;ParameterInfo&gt;();
+        ///            var result = new Collection&lt;ParameterInformation&gt;();
         ///{2}            return result;
         ///        }}
         ///    }}

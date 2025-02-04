@@ -1,3 +1,4 @@
+using MicroDotNet.Packages.Orm.DatabaseAbstraction;
 using MicroDotNet.Packages.Orm.Stories;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
@@ -13,7 +14,7 @@ namespace SomeNamespace
 {
     using MicroDotNet.Packages.Orm;
 
-    [ReadScalar("ScalarRetriever")]
+    [ReadScalar("ScalarRetriever", System.Data.CommandType.StoredProcedure)]
     public partial class ExecuteScalarContainer
     {
         public ExecuteScalarContainer(

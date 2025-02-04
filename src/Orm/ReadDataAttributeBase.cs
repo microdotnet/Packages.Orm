@@ -1,10 +1,11 @@
 using System;
 using System.Collections.ObjectModel;
+using System.Data;
 using System.Globalization;
 
 namespace MicroDotNet.Packages.Orm
 {
-    public abstract class ReadDataAttributeBase : StoredProcedureCallAttributeBase
+    public abstract class ReadDataAttributeBase : DatabaseCallAttributeBase
     {
         private static readonly ReadOnlyCollection<CallTypes> AllowedCallTypes = new ReadOnlyCollection<CallTypes>(
             new[]
@@ -13,8 +14,9 @@ namespace MicroDotNet.Packages.Orm
                 CallTypes.SelectMultiple,
             });
         
-        protected ReadDataAttributeBase(string procedureName, CallTypes callType)
-            : base(procedureName, callType)
+        protected ReadDataAttributeBase(
+            CallTypes callType)
+            : base(callType)
         {
             if (!AllowedCallTypes.Contains(callType))
             {

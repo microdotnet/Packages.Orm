@@ -22,13 +22,35 @@
         <value>namespace {0}
 {{
     using System;
+    using System.Collections.ObjectModel;
+    using System.Data;
+    using System.Threading;
     using System.Threading.Tasks;
+    using MicroDotNet.Packages.Orm.DatabaseAbstraction;
 
     public partial class {1}
     {{
-        public async Task ExecuteScalar()
+        public async Task&lt;object&gt; ExecuteScalar(
+            IDatabaseConnection connection,
+            CancellationToken cancellationToken)
         {{
-            await Task.Delay(TimeSpan.FromSeconds(1));
+            var commandText = {1}.CommandText;
+            var commandType = {1}.CommandType;
+            var parametersCollection = this.Parameters.ExtractParameters();
+            var result = await connection.ExecuteProcedureAsync(
+                commandText,
+                commandType,
+                parametersCollection,
+                new Collection&lt;string&gt;(),
+                r =&gt; r[0],
+                cancellationToken)
+                .ConfigureAwait(false);
+            if (result.Rows.Count == 0)
+            {{
+                return null;
+            }}
+
+            return result.Rows[0];
         }}
     }}
 }}</value>

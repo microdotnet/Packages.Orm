@@ -38,7 +38,7 @@ namespace MicroDotNet.Packages.Orm
                     var propertyType = prop.Type.ToString();
                     var dbType = Tools.TypeMappingProvider.MapToDbType(propertyType);
                     propertiesExtraction.AppendLine(
-                        $@"            var parameter_{prop.Identifier.Text} = new ParameterInfo(""{prop.Identifier.Text}"", this.{prop.Identifier.Text}, {dbType});");
+                        $@"            var parameter_{prop.Identifier.Text} = new ParameterInformation(""{prop.Identifier.Text}"", this.{prop.Identifier.Text}, {dbType});");
                     propertiesExtraction.AppendLine(
                         $@"            result.Add(parameter_{prop.Identifier.Text});");
                 }
