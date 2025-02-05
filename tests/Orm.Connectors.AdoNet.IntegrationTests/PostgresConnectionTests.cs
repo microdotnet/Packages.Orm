@@ -14,36 +14,17 @@ public class PostgresConnectionTests : IClassFixture<PostgresServerFixture>
     }
 
     [Fact]
-    public async Task WhenDataRetrievalIsExecutedThenCorrectResultIsReturned()
-    {
-        var connection = new AdoNetDatabaseConnection<NpgsqlConnection>(this.fixture.ConnectionString);
-        var result = await connection.ExecuteProcedureAsync(
-            "SELECT * FROM ExtractTestData(@Id)",
-            CommandType.Text,
-            [new ParameterInformation("Id", 1, DbType.Int32)],
-            [],
-            dr => new Row(dr.GetInt32(0), dr.GetString(1)),
-            CancellationToken.None);
-        result.ShouldNotBeNull();
-        result.Rows.Count.ShouldBe(1);
-        result.Rows[0].Id.ShouldBe(1);
-        result.Rows[0].Text.ShouldBe("Value1");
-    }
-
-    [Fact]
     public async Task WhenScalarRetrievalIsExecutedThenCorrectResultIsReturned()
     {
         var connection = new AdoNetDatabaseConnection<NpgsqlConnection>(this.fixture.ConnectionString);
-        var result = await connection.ExecuteProcedureAsync(
-            "SELECT CountTestData(@Increase)",
+        var result = await connection.ExecuteScalarAsync(
+            "SELECT * FROM ExecuteScalar(@Increase)",
             CommandType.Text,
             [new ParameterInformation("Increase", 3, DbType.Int32)],
-            [],
-            dr => new CountResult(dr.GetInt32(0)),
             CancellationToken.None);
         result.ShouldNotBeNull();
-        result.Rows.Count.ShouldBe(1);
-        result.Rows[0].Value.ShouldBe(7);
+        result.ShouldBeOfType<long>();
+        ((long)result).ShouldBe(7L);
     }
 
     private class Row

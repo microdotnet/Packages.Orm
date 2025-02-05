@@ -47,10 +47,7 @@ public class SimpleScalarExecutionTests
     [Fact]
     public void WhenNotGenericScalarCallIsExecutedThenExpectedResultIsReturned()
     {
-        var expectedResult = new ExecutionResult<object>(
-            ["TEST"],
-            new Dictionary<string, object>(),
-            0);
+        var expectedResult = "TEST";
         this.Given(t => t.ParametersInstanceIsCreated())
             .And(t => t.ExecutionContainerIsCreated())
             .And(t => t.ConnectionIsMocked(expectedResult))
@@ -69,15 +66,13 @@ public class SimpleScalarExecutionTests
         this.container = new(this.parameters);
     }
 
-    private void ConnectionIsMocked(ExecutionResult<object> expectedResult)
+    private void ConnectionIsMocked(object expectedResult)
     {
         this.connectionMock
-            .Setup(conn => conn.ExecuteProcedureAsync(
+            .Setup(conn => conn.ExecuteScalarAsync(
                 It.IsAny<string>(),
                 It.IsAny<CommandType>(),
                 It.IsAny<IReadOnlyCollection<ParameterInformation>>(),
-                It.IsAny<IReadOnlyCollection<string>>(),
-                It.IsAny<Func<IDataRecord, object>>(),
                 It.IsAny<CancellationToken>()))
             .ReturnsAsync(expectedResult);
     }
@@ -95,13 +90,11 @@ public class SimpleScalarExecutionTests
     private void DatabaseConnectionIsCalled()
     {
         this.connectionMock
-            .Verify(conn => conn.ExecuteProcedureAsync(
+            .Verify(conn => conn.ExecuteScalarAsync(
                 SimpleScalarExecutionContainer.CommandText,
                 SimpleScalarExecutionContainer.CommandType,
                 It.Is<IReadOnlyCollection<ParameterInformation>>(
                     c => c.Count == 2 && (string)c.ElementAt(0).Value == this.parameters.Parameter1 && (int)c.ElementAt(1).Value == this.parameters.Parameter2),
-                It.Is<IReadOnlyCollection<string>>(c => c.Count == 0),
-                It.IsAny<Func<IDataRecord, object>>(),
                 It.IsAny<CancellationToken>()),
                 Times.Once());
     }

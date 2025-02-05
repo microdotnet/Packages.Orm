@@ -57,54 +57,29 @@ public class PostgresServerFixture: IAsyncLifetime
             INSERT INTO test_table (Text) VALUES ('Value4');
             """;
         await ExecuteCommand(connection, fillTestTableWithDataCommandText);
-        const string createResultSetTypeCommandText =
+        const string createExecuteScalarResultSetTypeCommandText =
             """
-            CREATE TYPE TestDataRow AS (Id INT, Text VARCHAR(50))
+            CREATE TYPE ExecuteScalarRow AS (Result BIGINT)
             """;
-        await ExecuteCommand(connection, createResultSetTypeCommandText);
-        const string createRetrievalProcedureCommandText =
+        await ExecuteCommand(connection, createExecuteScalarResultSetTypeCommandText);
+        const string createExecuteScalarFunctionCommandText =
             """
-            CREATE FUNCTION ExtractTestData
+            CREATE FUNCTION ExecuteScalar
             (
-                Id INT
+                Increase INT
             )
-                RETURNS SETOF TestDataRow
+                RETURNS SETOF ExecuteScalarRow
             LANGUAGE plpgsql
             AS $$
             BEGIN
                 RETURN QUERY
                     SELECT
-                        t.Id,
-                        t.Text
+                        COUNT(*) + Increase Result
                     FROM
-                        test_table t
-                    WHERE
-                        t.Id = ExtractTestData.Id;
+                        test_table;
             END;
             $$
             """;
-        await ExecuteCommand(connection, createRetrievalProcedureCommandText);
-        const string createCounterProcedureCommandText =
-            """
-            CREATE FUNCTION CountTestData
-            (
-                Increase INT
-            )
-                RETURNS INT
-            LANGUAGE plpgsql
-            AS $$
-            DECLARE
-                Result INT;
-            BEGIN
-                SELECT
-                    COUNT(*) + Increase INTO Result
-                FROM
-                    test_table;
-
-                RETURN Result;
-            END;
-            $$
-            """;
-        await ExecuteCommand(connection, createCounterProcedureCommandText);
+        await ExecuteCommand(connection, createExecuteScalarFunctionCommandText);
     }
 }

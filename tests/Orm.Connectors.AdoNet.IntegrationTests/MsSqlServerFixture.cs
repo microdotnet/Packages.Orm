@@ -63,27 +63,9 @@ public class MsSqlServerFixture : IAsyncLifetime
             INSERT INTO [dbo].[TestTable] ([Text]) VALUES ('Value4');
             """;
         await ExecuteCommand(connection, fillTestTableWithDataCommandText);
-        const string createRetrievalProcedureCommandText =
+        const string createExecuteScalarProcedure =
             """
-            CREATE PROCEDURE [dbo].[ExtractTestData]
-            (
-                @Id INT
-            )
-            AS
-            BEGIN
-                SELECT
-                    [Id],
-                    [Text]
-                FROM
-                    [dbo].[TestTable]
-                WHERE
-                    [Id] = @Id
-            END
-            """;
-        await ExecuteCommand(connection, createRetrievalProcedureCommandText);
-        const string createCounterProcedureCommandText =
-            """
-            CREATE PROCEDURE [dbo].[CountTestData]
+            CREATE PROCEDURE [dbo].[ExecuteScalar]
             (
                 @Increase INT
             )
@@ -91,13 +73,11 @@ public class MsSqlServerFixture : IAsyncLifetime
             BEGIN
                 DECLARE @Result INT
                 SELECT
-                    @Result = COUNT(*) + @Increase
+                    COUNT(*) + @Increase [Result]
                 FROM
                     [dbo].[TestTable]
-
-                RETURN @Result
             END
             """;
-        await ExecuteCommand(connection, createCounterProcedureCommandText);
+        await ExecuteCommand(connection, createExecuteScalarProcedure);
     }
 }

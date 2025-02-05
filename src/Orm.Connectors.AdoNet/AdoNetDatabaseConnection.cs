@@ -17,49 +17,21 @@ public class AdoNetDatabaseConnection<TConnection> : IDatabaseConnection
 
     public string ConnectionString { get; }
 
-    public async Task<ExecutionResult<TResult>> ExecuteProcedureAsync<TResult>(
+    public async Task<object?> ExecuteScalarAsync(
         string procedureName,
         CommandType commandType,
         IReadOnlyCollection<ParameterInformation> inputParameters,
-        IReadOnlyCollection<string> outputParameters,
-        Func<IDataRecord, TResult> mapper,
         CancellationToken cancellationToken)
-        where TResult : class
     {
         var command = await this.PrepareCommandAsync(
-            procedureName,
-            commandType,
-            inputParameters,
-            outputParameters,
-            cancellationToken)
+                procedureName,
+                commandType,
+                inputParameters,
+                [],
+                cancellationToken)
             .ConfigureAwait(false);
-        var reader = await command.ExecuteReaderAsync(cancellationToken)
+        return await command.ExecuteScalarAsync(cancellationToken)
             .ConfigureAwait(false);
-        var rows = new List<TResult>();
-        while (await reader.ReadAsync(cancellationToken).ConfigureAwait(false))
-        {
-            rows.Add(mapper(reader));
-        }
-
-        var outputParametersValues = new Dictionary<string, object>();
-        foreach (var outputParameter in outputParameters)
-        {
-            var param = command.Parameters[outputParameter];
-            outputParametersValues.Add(outputParameter, param.Value!);
-        }
-        
-        var returnValueParameter = command.Parameters[ReturnValueParameterName];
-        var returnValue = (int)(returnValueParameter.Value ?? 0);
-        if (command.Connection is not null && Transaction.Current is not null)
-        {
-            await command.Connection.CloseAsync()
-                .ConfigureAwait(false);
-        }
-
-        return new ExecutionResult<TResult>(
-            rows,
-            outputParametersValues,
-            returnValue);
     }
 
     private async Task<DbCommand> PrepareCommandAsync(

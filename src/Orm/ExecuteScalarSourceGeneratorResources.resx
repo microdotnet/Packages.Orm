@@ -37,20 +37,14 @@
             var commandText = {1}.CommandText;
             var commandType = {1}.CommandType;
             var parametersCollection = this.Parameters.ExtractParameters();
-            var result = await connection.ExecuteProcedureAsync(
+            var result = await connection.ExecuteScalarAsync(
                 commandText,
                 commandType,
                 parametersCollection,
-                new Collection&lt;string&gt;(),
-                r =&gt; r[0],
                 cancellationToken)
                 .ConfigureAwait(false);
-            if (result.Rows.Count == 0)
-            {{
-                return null;
-            }}
 
-            return result.Rows[0];
+            return result;
         }}
     }}
 }}</value>
